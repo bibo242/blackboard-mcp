@@ -48,7 +48,7 @@ function parseArgs(argv: string[]): Flags {
   return flags;
 }
 
-const HELP = `blackboard-mcp v${SERVER_VERSION} — Blackboard Learn over MCP
+const HELP = `blackboard-mcp v${SERVER_VERSION}. Blackboard Learn over MCP
 
 USAGE
   blackboard-mcp [serve]                Run the MCP server on stdio (default)
@@ -64,7 +64,7 @@ USAGE
   blackboard-mcp endpoints [filter]     Show the endpoint map
 
 AUTH LOGIN
-  By default this reads the session straight out of your signed-in browser —
+  By default this reads the session straight out of your signed-in browser -
   no URLs, no cookies, no DevTools. It also captures your institution's
   identity-provider cookies, which lets the session renew itself silently
   instead of expiring every few hours.
@@ -180,10 +180,10 @@ async function authCommand(sub: string | undefined, flags: Flags): Promise<numbe
       out(`Session:     ${stateDir()}/session.enc (encrypted, mode 0600)`);
       out('');
       if (result.canAutoRefresh) {
-        out('Auto-refresh: ENABLED — identity-provider cookies were captured, so this');
+        out('Auto-refresh: ENABLED. Identity-provider cookies were captured, so this');
         out('              session will renew itself without asking you again.');
       } else {
-        out('Auto-refresh: unavailable — this session has no identity-provider cookies,');
+        out('Auto-refresh: unavailable. This session has no identity-provider cookies,');
         out('              so it will need a manual sign-in when it expires in a few');
         out('              hours. Run `blackboard-mcp auth login` without --paste to');
         out('              enable automatic renewal.');
@@ -220,10 +220,10 @@ async function authCommand(sub: string | undefined, flags: Flags): Promise<numbe
         const secs = await client.sessionSecondsRemaining();
         out(`Expires:   ${secs > 0 ? `in ${Math.round(secs / 60)} min` : 'EXPIRED'}`);
         const me = await client.whoami();
-        out(`Live check: OK — ${displayName(me)}`);
+        out(`Live check: OK. ${displayName(me)}`);
         return secs > 0 ? 0 : 1;
       } catch (err) {
-        out(`Live check: FAILED — ${toBlackboardError(err).describe()}`);
+        out(`Live check: FAILED. ${toBlackboardError(err).describe()}`);
         return 1;
       }
     }
@@ -241,7 +241,7 @@ async function authCommand(sub: string | undefined, flags: Flags): Promise<numbe
       out('Scanning for Blackboard sessions...');
       const found = await discoverInstances(profiles);
       if (found.length === 0) {
-        out('  none — sign in to Blackboard in your browser, then retry');
+        out('  none. Sign in to Blackboard in your browser, then retry');
         return 1;
       }
       out('');
@@ -341,7 +341,7 @@ async function harImportCommand(file: string | undefined, flags: Flags): Promise
 
   out(
     result.sessionCaptured
-      ? 'A session was recovered from the HAR — you are signed in.'
+      ? 'A session was recovered from the HAR. You are signed in.'
       : 'No usable cookies in the HAR (current Chrome strips them). Run `blackboard-mcp auth login` to sign in.',
   );
   return 0;
@@ -349,12 +349,12 @@ async function harImportCommand(file: string | undefined, flags: Flags): Promise
 
 async function doctorCommand(): Promise<number> {
   let problems = 0;
-  const ok = (label: string, detail = '') => out(`  OK    ${label}${detail ? ` — ${detail}` : ''}`);
+  const ok = (label: string, detail = '') => out(`  OK    ${label}${detail ? `. ${detail}` : ''}`);
   const bad = (label: string, detail = '') => {
     problems += 1;
-    out(`  FAIL  ${label}${detail ? ` — ${detail}` : ''}`);
+    out(`  FAIL  ${label}${detail ? `. ${detail}` : ''}`);
   };
-  const warn = (label: string, detail = '') => out(`  WARN  ${label}${detail ? ` — ${detail}` : ''}`);
+  const warn = (label: string, detail = '') => out(`  WARN  ${label}${detail ? `. ${detail}` : ''}`);
 
   out('');
   out(`blackboard-mcp v${SERVER_VERSION} diagnostics`);
@@ -368,12 +368,12 @@ async function doctorCommand(): Promise<number> {
   out('Configuration');
   const config = loadConfigOrNull();
   if (!config) {
-    bad('config', 'no instance configured — run `blackboard-mcp auth login`');
+    bad('config', 'no instance configured. Run `blackboard-mcp auth login`');
   } else {
     ok('instance', config.baseUrl);
     ok('page size', String(config.pageSize));
     ok('max download', fmtBytes(config.maxDownloadBytes));
-    if (config.allowWrites) warn('writes', 'ENABLED — tools may modify Blackboard state');
+    if (config.allowWrites) warn('writes', 'ENABLED: tools may modify Blackboard state');
     else ok('writes', 'disabled (read-only)');
   }
 
@@ -394,11 +394,11 @@ async function doctorCommand(): Promise<number> {
   out('Session');
   const session = await Session.tryLoad();
   if (!session) {
-    bad('session', 'none stored — run `blackboard-mcp auth login`');
+    bad('session', 'none stored. Run `blackboard-mcp auth login`');
   } else {
     ok('captured', `${session.capturedAt.toISOString()} (${session.ageHours.toFixed(1)}h ago)`);
     ok('cookies', (await session.cookieNames()).join(', '));
-    if (!session.xsrfToken) warn('xsrf token', 'absent — write operations will likely fail');
+    if (!session.xsrfToken) warn('xsrf token', 'absent: write operations will likely fail');
     else ok('xsrf token', 'present');
     if (config && session.baseUrl !== config.baseUrl) {
       bad('instance match', `session is for ${session.baseUrl}, config says ${config.baseUrl}`);

@@ -20,7 +20,7 @@ import { refreshSession } from './saml.js';
  *
  * Three shapes are accepted, because users reach for whichever their browser
  * offers first:
- *   1. A `curl` command from Chrome/Firefox "Copy as cURL" — cookies arrive in
+ *   1. A `curl` command from Chrome/Firefox "Copy as cURL". Cookies arrive in
  *      either `-b '...'` or `-H 'cookie: ...'`.
  *   2. A bare `Cookie:` header line copied out of the Network panel.
  *   3. A raw `name=value; name=value` string.
@@ -48,7 +48,7 @@ export function parseCookieInput(input: string): string {
   const bareHeader = /^\s*cookie\s*:\s*(.+)$/im.exec(trimmed);
   if (bareHeader?.[1]) return bareHeader[1].trim();
 
-  // 3. Raw cookie string — require at least one name=value pair to avoid
+  // 3. Raw cookie string. Require at least one name=value pair to avoid
   //    accepting arbitrary pasted text.
   if (/[^;=\s]+=[^;]*/.test(trimmed) && !trimmed.startsWith('curl')) {
     return trimmed;
@@ -134,7 +134,7 @@ export interface BrowserLoginResult {
  * against the live API, because cookie presence alone does not prove validity.
  *
  * Identity-provider cookies are imported alongside, which is what allows the
- * session to be renewed silently for as long as the IdP session lives — weeks,
+ * session to be renewed silently for as long as the IdP session lives. Weeks,
  * typically, versus Blackboard's few hours.
  */
 export async function loginFromBrowser(
@@ -200,7 +200,7 @@ export async function loginFromBrowser(
     let user = await probe(session, config);
 
     if (!user) {
-      // Stale Blackboard cookie but possibly a live IdP session — this is the
+      // Stale Blackboard cookie but possibly a live IdP session. This is the
       // normal case when the browser has been closed for a few hours.
       log.info('Browser session is stale; attempting silent renewal via the identity provider');
       const result = await refreshSession(session);
@@ -208,7 +208,7 @@ export async function loginFromBrowser(
         refreshed = true;
         user = await probe(session, config);
       } else if (result.needsInteractiveLogin) {
-        failures.push(`${candidate.host}: signed out — ${result.reason}`);
+        failures.push(`${candidate.host}: signed out. ${result.reason}`);
         continue;
       } else {
         failures.push(`${candidate.host}: ${result.reason ?? 'renewal failed'}`);
@@ -292,7 +292,7 @@ export interface LoginOptions {
  * Captures and validates a Blackboard session.
  *
  * Blackboard SaaS tenants almost always sit behind institutional SSO (SAML to
- * Azure AD, Shibboleth, ADFS), which cannot be scripted reliably or safely —
+ * Azure AD, Shibboleth, ADFS), which cannot be scripted reliably or safely -
  * it involves the user's real credentials and usually MFA. So the browser does
  * the authentication and we import the resulting session, rather than ever
  * handling a password.
@@ -370,7 +370,7 @@ export async function login(
         'Paste it below, then press Enter twice.',
         '',
         "(Blackboard's session cookie is HttpOnly, so copying from the console",
-        ' with document.cookie will not work — it has to come from a request.)',
+        ' with document.cookie will not work. It has to come from a request.)',
         '',
       ].join('\n'),
     );

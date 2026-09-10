@@ -78,7 +78,7 @@ export function registerCourseTools(server: McpServer): void {
           field: 'expires in',
           value: secs > 0 ? `${Math.round(secs / 60)} min` : 'expired',
         });
-        live = secs > 0 ? 'Session is **live**.' : 'Session has **expired** — run `blackboard-mcp auth login`.';
+        live = secs > 0 ? 'Session is **live**.' : 'Session has **expired**. Run `blackboard-mcp auth login`.';
       } catch (err) {
         live = `Could not reach Blackboard to verify: ${(err as Error).message}`;
       }

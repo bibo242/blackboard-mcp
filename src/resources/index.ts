@@ -100,7 +100,7 @@ export function registerResources(server: McpServer): void {
     {
       title: 'Course outline',
       description:
-        'The full content tree of one course as JSON — every item with its path, type and attached file.',
+        'The full content tree of one course as JSON, with every item\'s path, type and attached file.',
       mimeType: 'application/json',
     },
     async (uri, { courseId }) => {

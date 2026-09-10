@@ -21,8 +21,8 @@ export interface RequestOptions {
   /**
    * Permits a non-GET request even when writes are disabled.
    *
-   * Blackboard exposes two read operations behind non-GET verbs — the
-   * `utilities/batch` fan-out (PUT) and the activity stream (POST) — so those
+   * Blackboard exposes two read operations behind non-GET verbs. The
+   * `utilities/batch` fan-out (PUT) and the activity stream (POST). So those
    * must not be caught by the read-only guard.
    */
   forceAllowWrite?: boolean;
@@ -80,8 +80,8 @@ export class HttpClient {
   /**
    * Renews the session silently, at most once per 30 seconds.
    *
-   * Returns false when renewal is impossible — no identity-provider cookies, or
-   * the provider itself wants a real sign-in — so callers surface the original
+   * Returns false when renewal is impossible. No identity-provider cookies, or
+   * the provider itself wants a real sign-in. So callers surface the original
    * SESSION_EXPIRED with its instruction to re-run `auth login`.
    */
   async tryRefresh(): Promise<boolean> {

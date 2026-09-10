@@ -28,7 +28,7 @@ function columnName(c: BbGradeColumn | undefined): string {
  * Maps a score onto the course's displayed grade (e.g. "B+").
  *
  * Blackboard stores the numeric score and the schema separately, so a raw
- * score alone cannot tell a student whether they passed — the same 65 is a
+ * score alone cannot tell a student whether they passed. The same 65 is a
  * distinction on one schema and a fail on another.
  */
 function letterGrade(
@@ -98,7 +98,7 @@ export function registerGradeTools(server: McpServer): void {
         });
         if (args.gradedOnly) rows = rows.filter((r) => r.grade !== '-' && r.grade !== 'awaiting grade');
 
-        // Columns with no grade row at all still matter — they are upcoming work.
+        // Columns with no grade row at all still matter. They are upcoming work.
         const seen = new Set(grades.map((g) => g.columnId));
         const ungraded = columns
           .filter((c) => !seen.has(c.id) && c.scorable !== false && !c.calculatedFormula)
@@ -115,12 +115,12 @@ export function registerGradeTools(server: McpServer): void {
         const finalNote = final
           ? `\n**Final grade column:** ${columnName(final)}${
               final.possible ? ` (out of ${final.possible})` : ''
-            }${final.calculatedFormula ? ' — calculated/weighted' : ''}\n`
+            }${final.calculatedFormula ? '. Calculated/weighted' : ''}\n`
           : '';
 
         return text(
           [
-            `# Grades — ${label}`,
+            `# Grades: ${label}`,
             finalNote,
             table(args.gradedOnly ? rows : [...rows, ...ungraded]),
             '',
@@ -186,7 +186,7 @@ export function registerGradeTools(server: McpServer): void {
     {
       title: 'Get grade detail with feedback',
       description:
-        'Everything about one gradebook item: the score, rubric/points, due date, every attempt with its timestamp and status, the student\'s submitted text, and the instructor\'s written feedback. This is where feedback lives — the grade list does not carry it.',
+        'Everything about one gradebook item: the score, rubric/points, due date, every attempt with its timestamp and status, the student\'s submitted text, and the instructor\'s written feedback. This is where feedback lives. The grade list does not carry it.',
       inputSchema: {
         courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         columnId: z.string().describe('Gradebook column id from bb_list_grades.'),
@@ -388,7 +388,7 @@ export function registerGradeTools(server: McpServer): void {
           '',
           table(rows),
           '',
-          '_Averages are unweighted point totals over graded items only. A course\'s official weighted grade may differ — check its final grade column._',
+          '_Averages are unweighted point totals over graded items only. A course\'s official weighted grade may differ. Check its final grade column._',
         ].join('\n'),
       );
     }),

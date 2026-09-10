@@ -12,7 +12,7 @@ const run = promisify(execFile);
 /**
  * Reads session cookies straight out of the user's installed browser.
  *
- * This exists because the alternative — "open DevTools, copy as cURL" — asks a
+ * This exists because the alternative ("open DevTools, copy as cURL") asks a
  * student to understand HTTP. It is also *required* for silent session refresh:
  * re-minting a Blackboard session needs the identity provider's cookies
  * (login.microsoftonline.com and friends), which a single copied Blackboard
@@ -35,7 +35,7 @@ export interface BrowserCookie {
 
 export interface BrowserProfile {
   browser: string;
-  /** Human label, e.g. "Chrome — Profile 1". */
+  /** Human label, e.g. "Chrome: Profile 1". */
   label: string;
   /** Path to the cookie database. */
   cookieDb: string;
@@ -100,7 +100,7 @@ export function discoverProfiles(): BrowserProfile[] {
         if (!existsSync(db)) continue;
         found.push({
           browser,
-          label: `${browser} — ${dir}`,
+          label: `${browser}. ${dir}`,
           cookieDb: db,
           localState: existsSync(localState) ? localState : undefined,
           family: 'chromium',
@@ -126,7 +126,7 @@ export function discoverProfiles(): BrowserProfile[] {
       if (!existsSync(db)) continue;
       found.push({
         browser: 'Firefox',
-        label: `Firefox — ${dir.replace(/^[a-z0-9]+\./i, '')}`,
+        label: `Firefox: ${dir.replace(/^[a-z0-9]+\./i, '')}`,
         cookieDb: db,
         family: 'firefox',
         mtime: safeMtime(db),
@@ -190,7 +190,7 @@ async function queryCookieDb(
         return stmt.all(...params) as Array<Record<string, unknown>>;
       }
       // expires_utc is microseconds since 1601 and overflows a JS safe integer,
-      // which node:sqlite refuses to coerce — read it as text and parse.
+      // which node:sqlite refuses to coerce. Read it as text and parse.
       const stmt = db.prepare(
         `SELECT host_key, name, encrypted_value, value, path, is_secure, is_httponly,
                 CAST(expires_utc AS TEXT) AS expires_utc
@@ -262,7 +262,7 @@ async function chromiumKey(profile: BrowserProfile): Promise<{ v10?: Buffer; gcm
       password = stdout.trim();
     } catch (cause) {
       throw new BlackboardError('FORBIDDEN', `macOS did not release the ${profile.browser} cookie key.`, {
-        hint: 'A keychain prompt may have appeared — approve it and retry. If you denied it, run `security find-generic-password -s "Chrome Safe Storage"` once to re-prompt, or use `blackboard-mcp auth login --paste`.',
+        hint: 'A keychain prompt may have appeared. Approve it and retry. If you denied it, run `security find-generic-password -s "Chrome Safe Storage"` once to re-prompt, or use `blackboard-mcp auth login --paste`.',
         cause,
       });
     }

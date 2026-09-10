@@ -88,7 +88,7 @@ export function registerContentTools(server: McpServer): void {
         [
           `# ${name}`,
           '',
-          `${rows.length} item(s) — ${containers} folder/lesson, ${files} with files.`,
+          `${rows.length} item(s). ${containers} folder/lesson, ${files} with files.`,
           '',
           table(rows.map((c) => contentRow(c, true))),
           '',
@@ -167,7 +167,7 @@ export function registerContentTools(server: McpServer): void {
           { field: 'fileName', value: file.fileName },
           { field: 'mimeType', value: file.mimeType },
           { field: 'size', value: file.fileSize ? fmtBytes(file.fileSize) : undefined },
-          { field: 'downloadable', value: 'yes — use bb_read_file or bb_download_file' },
+          { field: 'downloadable', value: 'yes. Use bb_read_file or bb_download_file' },
         ]);
       }
 
@@ -179,7 +179,7 @@ export function registerContentTools(server: McpServer): void {
           ? [
               linkUrl,
               '',
-              `This is a linked ${external.kind} (${external.provider}). It holds no file in Blackboard, but **\`bb_read_file\` can read it directly** — available formats: ${external.formats.join(', ')}.`,
+              `This is a linked ${external.kind} (${external.provider}). It holds no file in Blackboard, but **\`bb_read_file\` can read it directly**. Available formats: ${external.formats.join(', ')}.`,
             ].join('\n')
           : linkUrl;
       }

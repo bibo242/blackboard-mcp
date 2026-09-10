@@ -24,7 +24,7 @@ export function createServer(): McpServer {
       instructions: [
         'Blackboard Learn access for the signed-in student or instructor.',
         '',
-        'Start with `bb_list_courses` — every other course tool needs the `courseId`',
+        'Start with `bb_list_courses`. Every other course tool needs the `courseId`',
         'it returns (an internal id like `_12345_1`, not the human course code).',
         '',
         'Common routes:',
@@ -38,7 +38,7 @@ export function createServer(): McpServer {
         '',
         'The server is read-only unless BLACKBOARD_MCP_ALLOW_WRITES=1 is set.',
         'If a tool reports SESSION_EXPIRED, the user must re-run',
-        '`blackboard-mcp auth login` in a terminal — it cannot be fixed from here.',
+        '`blackboard-mcp auth login` in a terminal. It cannot be fixed from here.',
       ].join('\n'),
     },
   );
@@ -56,7 +56,7 @@ export async function startStdio(): Promise<void> {
   log.info(
     config
       ? `Starting ${SERVER_NAME} v${SERVER_VERSION} for ${config.baseUrl}`
-      : `Starting ${SERVER_NAME} v${SERVER_VERSION} (not yet configured — run \`blackboard-mcp auth login\`)`,
+      : `Starting ${SERVER_NAME} v${SERVER_VERSION} (not yet configured. Run \`blackboard-mcp auth login\`)`,
   );
 
   const server = createServer();

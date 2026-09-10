@@ -9,7 +9,7 @@ import { log, redact } from '../lib/logger.js';
  * Blackboard sessions last a few hours; the identity provider's session lasts
  * weeks (Azure AD's `ESTSAUTHPERSISTENT`, Shibboleth's `_shibsession_`). So a
  * lapsed Blackboard session can be re-minted with no user interaction at all,
- * provided we still hold the IdP's cookies — which is exactly what a browser
+ * provided we still hold the IdP's cookies: which is exactly what a browser
  * does when you reload the page after being logged out.
  *
  * Verified against a HAR capture of a real reload on an Azure AD tenant:
@@ -20,7 +20,7 @@ import { log, redact } from '../lib/logger.js';
  *   GET  IdP?SAMLRequest=..&sso_reload=true        -> 200 auto-submit form
  *   POST /auth-saml/saml/SSO  (SAMLResponse=..)    -> 302 /ultra  [new BbRouter]
  *
- * The implementation is deliberately generic — follow redirects, auto-submit
+ * The implementation is deliberately generic. Follow redirects, auto-submit
  * any form the IdP hands back, stop when Blackboard gives us a session cookie.
  * That covers SAML, WS-Federation and Shibboleth without special-casing any
  * single provider.
@@ -46,7 +46,7 @@ export interface RefreshResult {
  * Attempts to renew `session` in place.
  *
  * On success the session's jar holds a fresh `BbRouter` and has been persisted.
- * On failure nothing is mutated destructively — the old cookies remain, since
+ * On failure nothing is mutated destructively. The old cookies remain, since
  * a stale session is still better than none while the user decides what to do.
  */
 export async function refreshSession(
@@ -62,7 +62,7 @@ export async function refreshSession(
 
   // `force` walks the full provider chain even when the current session would
   // still be accepted. A live session short-circuits at `GET /ultra -> 200`,
-  // which proves nothing about whether renewal *would* work — so verifying the
+  // which proves nothing about whether renewal *would* work. So verifying the
   // capability means temporarily setting the session cookies aside.
   if (opts.force) await dropSessionCookies(jar, session.baseUrl);
 
@@ -133,7 +133,7 @@ export async function refreshSession(
         hops,
         hostsSeen: [...hostsSeen],
         needsInteractiveLogin: true,
-        reason: `${target.hostname} is asking for credentials — the identity-provider session has expired`,
+        reason: `${target.hostname} is asking for credentials; the identity-provider session has expired`,
       };
     }
 
@@ -163,7 +163,7 @@ export async function refreshSession(
         // The chain has now named the tenant's actual identity provider, so
         // every other host's cookies were speculative and can go. Login has to
         // import broadly (the IdP is unknowable up front), but keeping
-        // unrelated cookies — Google, Auth0, whatever else matched — would be
+        // unrelated cookies (Google, Auth0, whatever else matched) would be
         // indefensible once we know which one is real.
         await pruneToHosts(jar, [baseHost, ...hostsSeen]);
         session.jar = jar;
@@ -304,7 +304,7 @@ function looksLikeIdpBootstrap(html: string, host: string, baseHost: string): bo
  * Detects a page asking a human for credentials.
  *
  * A username or password field on the IdP means the provider session is gone
- * and no amount of replaying will help — the user has to sign in again.
+ * and no amount of replaying will help. The user has to sign in again.
  */
 function needsInteractiveLogin(html: string, host: string, baseHost: string): boolean {
   if (host === baseHost) {
@@ -335,7 +335,7 @@ async function cloneJar(jar: CookieJar): Promise<CookieJar> {
  * Drops every cookie whose domain is not one of `hosts`.
  *
  * tough-cookie has no bulk delete, so the jar is rebuilt from its serialised
- * form — cheap, and it keeps the store's own invariants intact.
+ * form. Cheap, and it keeps the store's own invariants intact.
  */
 async function pruneToHosts(jar: CookieJar, hosts: string[]): Promise<void> {
   const keep = new Set(hosts.map((h) => h.toLowerCase()));

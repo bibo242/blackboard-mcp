@@ -65,7 +65,7 @@ function templateShape(template: string): string {
  *      override profile, so the package adapts to a tenant without a code change.
  *
  *   2. **A session, if the HAR still has one.** Current Chrome strips `Cookie`
- *      and `Set-Cookie` from HAR exports, so this usually finds nothing — which
+ *      and `Set-Cookie` from HAR exports, so this usually finds nothing. Which
  *      is a good default, since a HAR with cookies is a credential file. Firefox
  *      and some proxy tools do include them.
  */

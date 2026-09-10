@@ -67,7 +67,7 @@ export function registerDeadlineTools(server: McpServer): void {
 
       if (overdue.length + today.length + upcoming.length === 0) {
         return text(
-          `Nothing due between ${when(since)} and ${when(until)}.\n\nNote this reflects items with due dates set in the gradebook. Work assigned without a due date will not appear — use \`bb_browse_course\` to check a specific course.`,
+          `Nothing due between ${when(since)} and ${when(until)}.\n\nNote this reflects items with due dates set in the gradebook. Work assigned without a due date will not appear. Use \`bb_browse_course\` to check a specific course.`,
         );
       }
 
@@ -91,7 +91,7 @@ export function registerDeadlineTools(server: McpServer): void {
     {
       title: 'Blackboard calendar events',
       description:
-        'Lists calendar entries in a date range — class sessions, instructor-created events, and assignment due dates. Covers all courses by default. Use bb_todo instead when the question is specifically about assignment deadlines.',
+        'Lists calendar entries in a date range: class sessions, instructor-created events, and assignment due dates. Covers all courses by default. Use bb_todo instead when the question is specifically about assignment deadlines.',
       inputSchema: {
         days: z.number().int().min(1).max(180).optional().describe('Days ahead. Default 14.'),
         since: z.string().optional().describe('ISO start, e.g. "2026-09-01T00:00:00Z". Overrides days.'),
@@ -124,7 +124,7 @@ export function registerDeadlineTools(server: McpServer): void {
 
       return text(
         [
-          `# Calendar — ${when(since)} to ${when(until)}`,
+          `# Calendar: ${when(since)} to ${when(until)}`,
           '',
           `${items.length} event(s).`,
           '',
@@ -166,7 +166,7 @@ export function registerDeadlineTools(server: McpServer): void {
 
       return text(
         [
-          `# Schedule — ${label}`,
+          `# Schedule: ${label}`,
           '',
           rows.length
             ? table(rows)

@@ -132,7 +132,7 @@ export class BlackboardClient {
    * Seconds until the session expires; 0 or negative means already gone.
    *
    * Blackboard answers with `{timeBeforeTimeout, timeBeforeTimeoutToShowWarning}`
-   * in **milliseconds** — a fresh session reads about 10,800,000 (three hours).
+   * in **milliseconds**. A fresh session reads about 10,800,000 (three hours).
    * Other shapes are tolerated because this is an internal endpoint.
    */
   async sessionSecondsRemaining(): Promise<number> {
@@ -168,7 +168,7 @@ export class BlackboardClient {
    *    session that expired anyway (laptop asleep, absolute-lifetime cap).
    *
    * The result is that a user signs in once and is not asked again for as long
-   * as their identity-provider session lives — typically weeks.
+   * as their identity-provider session lives. Typically weeks.
    *
    * Returns a stop function.
    */
@@ -184,7 +184,7 @@ export class BlackboardClient {
         if (remaining <= 0) {
           log.info('Session expired; attempting silent renewal');
           const ok = await this.http.tryRefresh();
-          log.info(ok ? 'Session renewed' : 'Silent renewal unavailable — user must sign in again');
+          log.info(ok ? 'Session renewed' : 'Silent renewal unavailable. User must sign in again');
           return;
         }
         if (remaining < threshold) {
@@ -524,7 +524,7 @@ export class BlackboardClient {
   /**
    * Due-date / time-limit exceptions granted to a student (extensions).
    *
-   * Keyed by *membership* id, not user id — take it from the course roster or
+   * Keyed by *membership* id, not user id. Take it from the course roster or
    * the membership record in `listCourses`.
    */
   async listDueDateExceptions(courseId: string, membershipId: string): Promise<unknown[]> {

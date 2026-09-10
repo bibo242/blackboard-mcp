@@ -51,7 +51,7 @@ export function registerCommsTools(server: McpServer): void {
         const label = await client.courseName(args.courseId);
         return text(
           [
-            `# Announcements — ${label}`,
+            `# Announcements: ${label}`,
             '',
             `${rows.length} announcement(s).`,
             '',
@@ -146,7 +146,7 @@ export function registerCommsTools(server: McpServer): void {
 
       if (rows.length === 0) {
         return text(
-          'The activity stream is empty.\n\nBlackboard builds this asynchronously — if you expected entries, retry with flushCache=true.',
+          'The activity stream is empty.\n\nBlackboard builds this asynchronously. If you expected entries, retry with flushCache=true.',
         );
       }
 
@@ -184,13 +184,13 @@ export function registerCommsTools(server: McpServer): void {
             return `### ${when(m.createdDate)}${m.isRead === false ? ' · *unread*' : ''}\n\n${clip(t, 1500)}`;
           })
           .join('\n\n---\n\n');
-        return text(`# Thread ${conversationId} — ${label}\n\n${body || '_No messages._'}`);
+        return text(`# Thread ${conversationId}: ${label}\n\n${body || '_No messages._'}`);
       }
 
       const rows = await client.listConversations(courseId, { limit: limit ?? 50 });
       return text(
         [
-          `# Messages — ${label}`,
+          `# Messages: ${label}`,
           '',
           `${rows.length} thread(s).`,
           '',
@@ -272,7 +272,7 @@ export function registerCommsTools(server: McpServer): void {
 
       if (records.length === 0) {
         return text(
-          `# Attendance — ${label}\n\n_No attendance records._\n\nThis usually means the instructor does not use Blackboard's attendance tool for this course.`,
+          `# Attendance: ${label}\n\n_No attendance records._\n\nThis usually means the instructor does not use Blackboard's attendance tool for this course.`,
         );
       }
 
@@ -284,7 +284,7 @@ export function registerCommsTools(server: McpServer): void {
 
       return text(
         [
-          `# Attendance — ${label}`,
+          `# Attendance: ${label}`,
           '',
           table([...tally.entries()].map(([status, count]) => ({ status, sessions: count }))),
           '',
@@ -302,7 +302,7 @@ export function registerCommsTools(server: McpServer): void {
     {
       title: 'Unread message and notification counts',
       description:
-        'Unread message counts across every course in a single call, plus the overall messages summary. Cheap — use it to decide whether reading messages is worth it before calling bb_list_conversations.',
+        'Unread message counts across every course in a single call, plus the overall messages summary. Cheap. Use it to decide whether reading messages is worth it before calling bb_list_conversations.',
       inputSchema: {},
       annotations: { readOnlyHint: true, openWorldHint: true },
     },

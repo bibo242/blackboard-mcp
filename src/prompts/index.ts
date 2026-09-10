@@ -106,7 +106,7 @@ export function registerPrompts(server: McpServer): void {
               course
                 ? `1. Call bb_list_courses to resolve "${course}" to a courseId, then bb_search_content with that courseId and query="${topic}".`
                 : `1. Call bb_search_content with query="${topic}" to find relevant material across my courses.`,
-              '2. For the most relevant items, call bb_read_file to read the actual content. For long PDFs, page through with fromPage until you have the substance — do not stop at page 1 and guess.',
+              '2. For the most relevant items, call bb_read_file to read the actual content. For long PDFs, page through with fromPage until you have the substance. Do not stop at page 1 and guess.',
               '3. Call bb_get_content on any non-file items (pages, assignment briefs) that look relevant.',
               '',
               'Then produce:',
@@ -216,7 +216,7 @@ export function registerPrompts(server: McpServer): void {
               `Find "${what}" in my Blackboard courses.`,
               '',
               'Steps:',
-              `1. Call bb_search_content with query terms drawn from "${what}". Try a couple of phrasings if the first returns nothing — instructors name things inconsistently.`,
+              `1. Call bb_search_content with query terms drawn from "${what}". Try a couple of phrasings if the first returns nothing. Instructors name things inconsistently.`,
               '2. If that fails, call bb_list_courses then bb_list_files on the likely course to browse what is actually there.',
               '3. Once found, report the course, the folder path, and the contentId.',
               '',

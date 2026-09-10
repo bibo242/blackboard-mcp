@@ -7,7 +7,7 @@ import { fmtBytes } from './files.js';
  *
  * Instructors routinely publish material as a Google Slides/Docs link rather
  * than uploading a file, which leaves a `resource/x-bb-externallink` item that
- * dead-ends at a URL — Blackboard holds no bytes at all. Since these links are
+ * dead-ends at a URL. Blackboard holds no bytes at all. Since these links are
  * often the majority of a course's real material, resolving them is the
  * difference between "read me the lecture" working and not.
  *
@@ -16,8 +16,8 @@ import { fmtBytes } from './files.js';
  *
  *   1. **Provider allowlist.** Only known document hosts with a documented
  *      export endpoint are fetched. Without this, a pasted link would turn this
- *      tool into an arbitrary URL fetcher — a request-forgery primitive and a
- *      data-exfiltration path.
+ *      tool into an arbitrary URL fetcher, which is a request-forgery primitive
+ *      and a data-exfiltration path.
  *   2. **No credentials, ever.** These fetches carry no Blackboard cookies, no
  *      session, and no auth of any kind. Only material the instructor already
  *      made link-shareable is reachable, which is exactly the intended scope.
@@ -115,7 +115,7 @@ export interface ExternalFetchResult {
  *
  * Google answers a request for something not link-shared with an HTML page
  * (404 or a sign-in wall) rather than an error status alone, so the content
- * type is checked as well — otherwise a "successful" fetch would hand back a
+ * type is checked as well. Otherwise a "successful" fetch would hand back a
  * login page dressed up as a slide deck.
  */
 export async function fetchExternalDocument(

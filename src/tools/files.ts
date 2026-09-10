@@ -32,9 +32,9 @@ interface FileTarget {
  *
  * Blackboard exposes files three different ways and instructors use all of
  * them interchangeably, so checking only one route misses material:
- *   1. `contentDetail` on a `resource/x-bb-file` item — the common case
- *   2. the `attachments` sub-resource — used by Ultra Documents/assignments
- *   3. `/bbcswebdav/` links embedded in the body HTML — used when an
+ *   1. `contentDetail` on a `resource/x-bb-file` item. The common case
+ *   2. the `attachments` sub-resource, used by Ultra Documents and assignments
+ *   3. `/bbcswebdav/` links embedded in the body HTML. Used when an
  *      instructor pastes a handout into a page instead of attaching it
  */
 async function resolveFileTargets(
@@ -113,7 +113,7 @@ async function fetchLinkedDocument(
 function pickTarget(targets: FileTarget[], wanted: string | undefined): FileTarget {
   if (targets.length === 0) {
     throw new BlackboardError('NOT_FOUND', 'This content item has no downloadable file.', {
-      hint: 'Use bb_get_content to inspect the item — it may be a link, a folder, or an LTI tool rather than a file.',
+      hint: 'Use bb_get_content to inspect the item. It may be a link, a folder, or an LTI tool rather than a file.',
     });
   }
   if (!wanted) return targets[0]!;
@@ -133,7 +133,7 @@ export function registerFileTools(server: McpServer): void {
     {
       title: 'List downloadable files in a course',
       description:
-        'Walks a course and lists every readable document — attached files, attachments, files embedded in page bodies, and content items that link to Google Slides/Docs/Sheets — with name, type, size and the contentId needed to fetch them.',
+        'Walks a course and lists every readable document: attached files, attachments, files embedded in page bodies, and content items that link to Google Slides, Docs or Sheets. Returns name, type, size and the contentId needed to fetch each one.',
       inputSchema: {
         courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         extension: z
@@ -225,7 +225,7 @@ export function registerFileTools(server: McpServer): void {
     {
       title: 'Read a course file as text',
       description:
-        'Downloads a file attached to a content item and extracts its text. Also resolves content items that merely LINK to a Google Slides/Docs/Sheets document — common for lecture decks — by fetching the provider export, so reading works the same either way. PDFs are returned a page-window at a time (use fromPage to continue), so a long document will not flood the context. Handles PDF, HTML, and plain-text/code/CSV; Office formats download but cannot be extracted. This is the tool to use to actually read lecture notes or a handout.',
+        'Downloads a file attached to a content item and extracts its text. Also resolves content items that merely LINK to a Google Slides/Docs/Sheets document (common for lecture decks) by fetching the provider export, so reading works the same either way. PDFs are returned a page-window at a time (use fromPage to continue), so a long document will not flood the context. Handles PDF, HTML, and plain-text/code/CSV; Office formats download but cannot be extracted. This is the tool to use to actually read lecture notes or a handout.',
       inputSchema: {
         courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         contentId: z.string().describe('Content item id holding the file.'),
@@ -493,7 +493,7 @@ export function registerFileTools(server: McpServer): void {
 
       return text(
         [
-          `# Downloaded files — ${label}`,
+          `# Downloaded files: ${label}`,
           '',
           `${rows.length} file(s) processed, ${fmtBytes(totalBytes)} newly fetched, ${skipped} already present.`,
           `Saved under: \`${dir}\``,
@@ -525,7 +525,7 @@ export function registerFileTools(server: McpServer): void {
 
       if (files.length === 0) {
         return text(
-          'No files are attached to this attempt.\n\nThe submission may be text-only — check `studentSubmission` in `bb_get_grade_detail`.',
+          'No files are attached to this attempt.\n\nThe submission may be text-only. Check `studentSubmission` in `bb_get_grade_detail`.',
         );
       }
 

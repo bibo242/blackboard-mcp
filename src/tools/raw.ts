@@ -8,7 +8,7 @@ import { DEFAULT_ENDPOINTS, loadEndpoints } from '../client/endpoints.js';
  * Path prefixes the raw tool may reach.
  *
  * The point of the escape hatch is to reach Blackboard API surfaces this
- * package has not modelled yet — not to turn the session into a general web
+ * package has not modelled yet, not to turn the session into a general web
  * client. Restricting to API prefixes keeps the blast radius to JSON endpoints
  * on the user's own instance (the HTTP client separately enforces the host
  * allowlist, so cookies can never be sent off-tenant).
@@ -48,7 +48,7 @@ export function registerRawTools(server: McpServer): void {
     {
       title: 'Call a Blackboard API endpoint directly',
       description:
-        'Escape hatch: issues a request against any Blackboard API path using the stored session, and returns the raw JSON. Use this when no dedicated tool covers what you need — the Ultra internal API (/learn/api/v1/...) exposes far more than this server models. Call bb_list_endpoints first to see what is already wrapped.',
+        'Escape hatch: issues a request against any Blackboard API path using the stored session, and returns the raw JSON. Use this when no dedicated tool covers what you need. The Ultra internal API (/learn/api/v1/...) exposes far more than this server models. Call bb_list_endpoints first to see what is already wrapped.',
       inputSchema: {
         path: z
           .string()

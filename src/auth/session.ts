@@ -94,7 +94,7 @@ export class Session {
    * Builds a session from raw `Cookie:` header text, as copied from devtools.
    *
    * Only carries cookies for the Blackboard host, so a session built this way
-   * cannot be silently refreshed — see `Session.fromBrowserCookies` for the
+   * cannot be silently refreshed. See `Session.fromBrowserCookies` for the
    * multi-host path that can.
    */
   static async fromCookieHeader(
@@ -137,8 +137,8 @@ export class Session {
   /**
    * Builds a session from cookies read out of a real browser profile.
    *
-   * Unlike `fromCookieHeader`, this keeps cookies for *every* host supplied —
-   * critically the identity provider's — which is what makes silent refresh
+   * Unlike `fromCookieHeader`, this keeps cookies for *every* host supplied -
+   * critically the identity provider's: which is what makes silent refresh
    * possible later. Session cookies (no expiry) are kept too: Blackboard's
    * BbRouter is one.
    */

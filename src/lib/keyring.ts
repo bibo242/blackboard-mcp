@@ -15,8 +15,8 @@ const ACCOUNT = 'session-encryption-key';
  * Resolves the 32-byte key used to encrypt the session at rest.
  *
  * Preference order:
- *   1. OS keychain (macOS `security`, Linux `secret-tool`) — key never touches disk.
- *   2. A 0600 keyfile under the state dir — portable fallback.
+ *   1. OS keychain (macOS `security`, Linux `secret-tool`). Key never touches disk.
+ *   2. A 0600 keyfile under the state dir. Portable fallback.
  *
  * The fallback is deliberately not treated as a failure: it is still strictly
  * better than a plaintext session file, and it keeps the package dependency-free
@@ -51,7 +51,7 @@ async function readFromOsKeychain(): Promise<Buffer | null> {
       return null;
     }
   } catch {
-    // Not found, or the tool is unavailable — fall through to the next strategy.
+    // Not found, or the tool is unavailable. Fall through to the next strategy.
   }
   return null;
 }

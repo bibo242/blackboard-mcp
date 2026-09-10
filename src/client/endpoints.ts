@@ -4,7 +4,7 @@ import { log } from '../lib/logger.js';
 
 /**
  * Endpoint templates for the Blackboard Learn **Ultra internal API**
- * (`/learn/api/v1/*`) — the surface the Ultra web client itself calls with
+ * (`/learn/api/v1/*`). The surface the Ultra web client itself calls with
  * nothing but the session cookie.
  *
  * This is deliberately NOT the documented `/learn/api/public/v1/*` REST API.
@@ -19,7 +19,7 @@ import { log } from '../lib/logger.js';
  * Placeholders are `{name}`, substituted by `expand()`. Every template is
  * overridable from `~/.blackboard-mcp/endpoints.json` so a tenant on a
  * different Learn release, or behind a path-rewriting proxy, can be corrected
- * without a code change — see `blackboard-mcp har import`.
+ * without a code change. See `blackboard-mcp har import`.
  */
 export const DEFAULT_ENDPOINTS = {
   // ── identity & session ──────────────────────────────────────────────────
@@ -27,7 +27,7 @@ export const DEFAULT_ENDPOINTS = {
   user: '/learn/api/v1/users/{userId}',
   selfMemberships: '/learn/api/v1/users/me/memberships',
   userMemberships: '/learn/api/v1/users/{userId}/memberships',
-  /** Seconds until the session goes inactive — the cheapest liveness probe. */
+  /** Seconds until the session goes inactive. The cheapest liveness probe. */
   sessionTtl: '/learn/api/v1/utilities/timeUntilBbSessionInactive',
   /** Extends the session without doing real work. */
   sessionKeepAlive: '/learn/api/v1/utilities/keepBbSessionActive',
@@ -163,7 +163,7 @@ export interface EndpointProfile {
   overrides: Partial<EndpointMap>;
   source?: string;
   capturedAt?: string;
-  /** Paths seen in a HAR that we do not model — kept purely for inspection. */
+  /** Paths seen in a HAR that we do not model. Kept purely for inspection. */
   observed?: Array<{ method: string; path: string; count: number }>;
 }
 

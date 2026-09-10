@@ -60,7 +60,7 @@ const HTML_EXTENSIONS = new Set(['.html', '.htm', '.xhtml']);
  *
  * Office formats are ZIP containers; parsing them needs a real unzip
  * implementation, which Node does not ship and which is not worth a native
- * dependency here. The file still downloads fine — only extraction is refused,
+ * dependency here. The file still downloads fine. Only extraction is refused,
  * with a message that says so.
  */
 const KNOWN_BINARY: Record<string, string> = {

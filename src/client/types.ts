@@ -6,7 +6,7 @@
  * string rather than an object, rich text arrives as `{rawText, displayText}`,
  * and `paging` carries `count`/`offset` rather than only a next-page link.
  *
- * Treat nearly every field as optional — tenants disable features and
+ * Treat nearly every field as optional. Tenants disable features and
  * instructors leave things unset.
  */
 
