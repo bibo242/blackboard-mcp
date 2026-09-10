@@ -1,0 +1,77 @@
+{
+  "name": "blackboard-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Blackboard Learn \u2014 courses, content, grades, assignments, announcements, and file/PDF retrieval via your own authenticated session.",
+  "keywords": [
+    "blackboard",
+    "blackboard-learn",
+    "blackboard-ultra",
+    "claude",
+    "codex",
+    "cursor",
+    "lms",
+    "mcp",
+    "modelcontextprotocol",
+    "saml",
+    "sso",
+    "student"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "bin": {
+    "blackboard-mcp": "dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./client": {
+      "types": "./dist/client/index.d.ts",
+      "import": "./dist/client/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && chmod +x dist/cli.js",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json",
+    "test": "npm run build && node --test --experimental-strip-types test/*.test.ts",
+    "lint": "npm run typecheck",
+    "prepublishOnly": "npm run build",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/cli.js",
+    "test:only": "node --test --experimental-strip-types test/*.test.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.0",
+    "tough-cookie": "^5.1.2",
+    "unpdf": "^1.3.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipedias-ie/blackboard-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/felipedias-ie/blackboard-mcp/issues"
+  },
+  "homepage": "https://github.com/felipedias-ie/blackboard-mcp#readme",
+  "author": "felipedias-ie"
+}
