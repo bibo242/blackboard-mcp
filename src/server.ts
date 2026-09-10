@@ -6,8 +6,22 @@ import { registerResources } from './resources/index.js';
 import { loadConfigOrNull } from './config.js';
 import { log } from './lib/logger.js';
 
+import { createRequire } from 'node:module';
+
 export const SERVER_NAME = 'blackboard-mcp';
-export const SERVER_VERSION = '0.1.0';
+
+/**
+ * Read from package.json rather than hardcoded, so the CLI and the MCP
+ * handshake can never advertise a version that differs from the published one.
+ */
+export const SERVER_VERSION: string = (() => {
+  try {
+    const require = createRequire(import.meta.url);
+    return (require('../package.json') as { version?: string }).version ?? '0.0.0';
+  } catch {
+    return '0.0.0';
+  }
+})();
 
 /**
  * Builds the MCP server with every tool, prompt and resource registered.
