@@ -161,7 +161,7 @@ export function registerCommsTools(server: McpServer): void {
       description:
         'Lists the message threads (Blackboard "conversations") in a course, and optionally the messages inside one thread.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         conversationId: z
           .string()
           .optional()
@@ -215,8 +215,8 @@ export function registerCommsTools(server: McpServer): void {
       description:
         'Reads a discussion forum: its top-level posts, and the replies to one post when messageId is given. Find the forumId from a "discussion" item in bb_browse_course (its contentDetail carries conferenceId/id).',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
-        forumId: z.string().describe('Forum id, e.g. "_42333_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
+        forumId: z.string().describe('Forum id, e.g. "_20001_1".'),
         messageId: z.string().optional().describe('Read replies to this post.'),
         limit: z.number().int().min(1).max(200).optional(),
       },
@@ -258,7 +258,7 @@ export function registerCommsTools(server: McpServer): void {
       description:
         'Lists the attendance records recorded for the signed-in user in a course (present/absent/late/excused per session), when the instructor uses Blackboard attendance.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         limit: z.number().int().min(1).max(400).optional(),
       },
       annotations: { readOnlyHint: true, openWorldHint: true },

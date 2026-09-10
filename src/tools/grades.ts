@@ -60,7 +60,7 @@ export function registerGradeTools(server: McpServer): void {
         courseId: z
           .string()
           .optional()
-          .describe('Course id, e.g. "_47_1". Omit for every enrolled course.'),
+          .describe('Course id, e.g. "_12345_1". Omit for every enrolled course.'),
         gradedOnly: z.boolean().optional().describe('Hide items with no score yet. Default false.'),
         maxCourses: z
           .number()
@@ -188,7 +188,7 @@ export function registerGradeTools(server: McpServer): void {
       description:
         'Everything about one gradebook item: the score, rubric/points, due date, every attempt with its timestamp and status, the student\'s submitted text, and the instructor\'s written feedback. This is where feedback lives — the grade list does not carry it.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         columnId: z.string().describe('Gradebook column id from bb_list_grades.'),
         includeAttempts: z.boolean().optional().describe('Fetch attempt detail. Default true.'),
       },

@@ -60,7 +60,7 @@ export interface BbUser {
 export interface BbCourse {
   id: string;
   uuid?: string;
-  /** Human-facing course code, e.g. "BCSAI2026CSAI.3.M.B_C3_520330". */
+  /** Human-facing course code, e.g. "CS101.2.M.B_C2_123456". */
   courseId?: string;
   /** Short code shown in the UI. */
   displayId?: string;

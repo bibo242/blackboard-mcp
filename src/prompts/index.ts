@@ -49,7 +49,7 @@ export function registerPrompts(server: McpServer): void {
       title: 'Brief me on a course',
       description: 'Build a full picture of one course: structure, deadlines, grades and recent activity.',
       argsSchema: {
-        course: z.string().describe('Course name, code, or id (e.g. "_47_1" or "Machine Learning").'),
+        course: z.string().describe('Course name, code, or id (e.g. "_12345_1" or "Machine Learning").'),
       },
     },
     ({ course }) => ({

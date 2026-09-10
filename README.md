@@ -173,7 +173,7 @@ args = ["-y", "blackboard-mcp"]
 
 ## Tools
 
-Every course tool takes a `courseId`, an internal id like `_47_1` rather than the human course code. Get them from `bb_list_courses`.
+Every course tool takes a `courseId`, an internal id like `_12345_1` rather than the human course code. Get them from `bb_list_courses`.
 
 ### Courses and identity
 | Tool | Purpose |
@@ -331,11 +331,11 @@ for (const m of await bb.listCourses({ availableOnly: true })) {
 }
 
 // Recursive content tree, both roots
-const items = await bb.walkContents('_47_1');
+const items = await bb.walkContents('_12345_1');
 
 // Fan out across courses in one request
 const grades = await bb.batch([
-  { method: 'GET', relativeUrl: 'v1/courses/_47_1/gradebook/grades?userId=_1_1' },
+  { method: 'GET', relativeUrl: 'v1/courses/_12345_1/gradebook/grades?userId=_1_1' },
 ]);
 ```
 

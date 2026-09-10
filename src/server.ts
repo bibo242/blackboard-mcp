@@ -25,7 +25,7 @@ export function createServer(): McpServer {
         'Blackboard Learn access for the signed-in student or instructor.',
         '',
         'Start with `bb_list_courses` — every other course tool needs the `courseId`',
-        'it returns (an internal id like `_47_1`, not the human course code).',
+        'it returns (an internal id like `_12345_1`, not the human course code).',
         '',
         'Common routes:',
         '  - "what is due?"            -> bb_todo',

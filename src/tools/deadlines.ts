@@ -140,7 +140,7 @@ export function registerDeadlineTools(server: McpServer): void {
       title: 'Get a course meeting schedule',
       description:
         'Lists the recurring class meetings configured for a course (day, time, room). Empty for courses whose instructor never set one up.',
-      inputSchema: { courseId: z.string().describe('Course id, e.g. "_47_1".') },
+      inputSchema: { courseId: z.string().describe('Course id, e.g. "_12345_1".') },
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
     guard('bb_course_schedule', async ({ courseId }) => {

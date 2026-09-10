@@ -48,7 +48,7 @@ export function registerContentTools(server: McpServer): void {
       description:
         'Walks the full content outline of a course recursively and returns every item with its folder path, type, and any attached file. This is the primary way to discover what material a course contains. Use maxDepth/maxNodes to bound very large courses.',
       inputSchema: {
-        courseId: z.string().describe('Course id from bb_list_courses, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id from bb_list_courses, e.g. "_12345_1".'),
         rootId: z
           .string()
           .optional()
@@ -105,7 +105,7 @@ export function registerContentTools(server: McpServer): void {
       description:
         'Lists the immediate children of a course folder or lesson, or the top level of the course when no folder is given. Prefer bb_browse_course unless you specifically want one level.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         contentId: z
           .string()
           .optional()
@@ -130,8 +130,8 @@ export function registerContentTools(server: McpServer): void {
       description:
         'Full detail for one content item: its rendered body text, attached file metadata, external link target, due date, and any files embedded in the body HTML. Use this to actually read an announcement-style document or assignment brief.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
-        contentId: z.string().describe('Content item id, e.g. "_108111_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
+        contentId: z.string().describe('Content item id, e.g. "_10001_1".'),
         includeChildren: z
           .boolean()
           .optional()

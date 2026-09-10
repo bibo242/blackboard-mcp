@@ -24,7 +24,7 @@ export interface ListOptions {
 /** One read in a `utilities/batch` fan-out. */
 export interface BatchRequest {
   method: 'GET';
-  /** Version-relative, e.g. `v1/courses/_47_1/gradebook/columns?limit=100`. */
+  /** Version-relative, e.g. `v1/courses/_12345_1/gradebook/columns?limit=100`. */
   relativeUrl: string;
 }
 

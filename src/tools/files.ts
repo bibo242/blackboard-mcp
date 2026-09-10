@@ -135,7 +135,7 @@ export function registerFileTools(server: McpServer): void {
       description:
         'Walks a course and lists every readable document — attached files, attachments, files embedded in page bodies, and content items that link to Google Slides/Docs/Sheets — with name, type, size and the contentId needed to fetch them.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         extension: z
           .string()
           .optional()
@@ -227,7 +227,7 @@ export function registerFileTools(server: McpServer): void {
       description:
         'Downloads a file attached to a content item and extracts its text. Also resolves content items that merely LINK to a Google Slides/Docs/Sheets document — common for lecture decks — by fetching the provider export, so reading works the same either way. PDFs are returned a page-window at a time (use fromPage to continue), so a long document will not flood the context. Handles PDF, HTML, and plain-text/code/CSV; Office formats download but cannot be extracted. This is the tool to use to actually read lecture notes or a handout.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         contentId: z.string().describe('Content item id holding the file.'),
         fileName: z
           .string()
@@ -368,7 +368,7 @@ export function registerFileTools(server: McpServer): void {
       description:
         'Downloads a file from a content item and saves it locally without extracting text. Use this for Office documents, images, archives, or anything the user wants to keep. Also handles content items that link to Google Slides/Docs/Sheets, fetching the export (pptx/docx/xlsx/pdf). Returns the saved path.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         contentId: z.string().describe('Content item id holding the file.'),
         fileName: z.string().optional().describe('Pick by name substring when several files exist.'),
         all: z.boolean().optional().describe('Download every file on the item, not just the first.'),
@@ -442,7 +442,7 @@ export function registerFileTools(server: McpServer): void {
       description:
         'Walks a course and downloads every attached file to a local folder, organised by course. Use for archiving a course or grabbing all slides at once. Respects the configured size limit per file and skips files already on disk.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         extension: z.string().optional().describe('Only this extension, e.g. "pdf".'),
         maxFiles: z.number().int().min(1).max(300).optional().describe('Cap on downloads. Default 50.'),
         maxNodes: z.number().int().min(1).max(2000).optional().describe('Tree walk cap. Default 600.'),
@@ -511,7 +511,7 @@ export function registerFileTools(server: McpServer): void {
       description:
         'Downloads the files the student submitted with an assignment attempt. Use bb_get_grade_detail first to find the attemptId and columnId.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         columnId: z.string().describe('Gradebook column id.'),
         attemptId: z.string().describe('Attempt id.'),
       },

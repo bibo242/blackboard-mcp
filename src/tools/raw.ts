@@ -52,7 +52,7 @@ export function registerRawTools(server: McpServer): void {
       inputSchema: {
         path: z
           .string()
-          .describe('Instance-relative API path, e.g. "/learn/api/v1/courses/_47_1/groups".'),
+          .describe('Instance-relative API path, e.g. "/learn/api/v1/courses/_12345_1/groups".'),
         method: z
           .enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
           .optional()
@@ -117,7 +117,7 @@ export function registerRawTools(server: McpServer): void {
     {
       title: 'Call several Blackboard endpoints at once',
       description:
-        'Fans out up to 20 GET reads in a single round trip using Blackboard\'s own batch endpoint. Paths are version-relative, e.g. "v1/courses/_47_1/groups". Much cheaper than repeated bb_raw_request calls when gathering the same data across many courses.',
+        'Fans out up to 20 GET reads in a single round trip using Blackboard\'s own batch endpoint. Paths are version-relative, e.g. "v1/courses/_12345_1/groups". Much cheaper than repeated bb_raw_request calls when gathering the same data across many courses.',
       inputSchema: {
         paths: z
           .array(z.string())
@@ -207,7 +207,7 @@ export function registerRawTools(server: McpServer): void {
       description:
         'Marks a reviewable content item as reviewed (the "Mark Reviewed" button in Ultra). Requires writes to be enabled with BLACKBOARD_MCP_ALLOW_WRITES=1; this server is read-only by default.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         contentId: z.string().describe('Content item id. Must be a reviewable item.'),
         reviewed: z.boolean().optional().describe('Default true; pass false to un-review.'),
       },

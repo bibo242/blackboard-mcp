@@ -1,7 +1,7 @@
 {
   "name": "blackboard-mcp",
-  "version": "0.1.0",
-  "description": "MCP server for Blackboard Learn \u2014 courses, content, grades, assignments, announcements, and file/PDF retrieval via your own authenticated session.",
+  "version": "0.1.1",
+  "description": "MCP server for Blackboard Learn (Ultra). Read your courses, content, files, grades, deadlines and announcements using your own browser session.",
   "keywords": [
     "blackboard",
     "blackboard-learn",

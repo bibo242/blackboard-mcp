@@ -94,7 +94,7 @@ export function registerCourseTools(server: McpServer): void {
     {
       title: 'List my Blackboard courses',
       description:
-        'Lists the courses the signed-in user is enrolled in, with course id, name, term, role and last-access date. The returned `courseId` (like `_47_1`) is what every other course tool needs. Start here.',
+        'Lists the courses the signed-in user is enrolled in, with course id, name, term, role and last-access date. The returned `courseId` (like `_12345_1`) is what every other course tool needs. Start here.',
       inputSchema: {
         availableOnly: z
           .boolean()
@@ -158,7 +158,7 @@ export function registerCourseTools(server: McpServer): void {
       description:
         'Full detail for one course: name, code, term, availability window, Ultra/Classic mode, and the tools enabled in it.',
       inputSchema: {
-        courseId: z.string().describe('Course id from bb_list_courses, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id from bb_list_courses, e.g. "_12345_1".'),
         includeTools: z.boolean().optional().describe('Also list the course tools. Default true.'),
       },
       annotations: { readOnlyHint: true, openWorldHint: true },
@@ -235,7 +235,7 @@ export function registerCourseTools(server: McpServer): void {
       description:
         'Lists the people enrolled in a course with their roles. Useful for finding an instructor to contact, or identifying group members.',
       inputSchema: {
-        courseId: z.string().describe('Course id, e.g. "_47_1".'),
+        courseId: z.string().describe('Course id, e.g. "_12345_1".'),
         role: z
           .enum(['all', 'instructors', 'students'])
           .optional()

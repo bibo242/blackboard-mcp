@@ -139,7 +139,7 @@ export const DEFAULT_ENDPOINTS = {
   /**
    * Tenant and person UUIDs plus the regional service routing table. Needed to
    * address any `/foundations/...` service, which are keyed by UUID rather than
-   * by the `_47_1`-style ids the rest of the API uses.
+   * by the `_12345_1`-style ids the rest of the API uses.
    */
   foundationsContext: '/learn/api/v1/foundationsToken/context',
   /**
@@ -203,7 +203,7 @@ export function expand(op: OperationName, params: Record<string, string> = {}): 
     if (value === undefined) {
       throw new Error(`Endpoint "${op}" needs a "${key}" parameter (template: ${template})`);
     }
-    // Blackboard ids look like `_47_1` and must survive verbatim; encodeURIComponent
+    // Blackboard ids look like `_12345_1` and must survive verbatim; encodeURIComponent
     // leaves underscores and digits alone, so this is safe for them and still
     // protects against traversal in caller-supplied values.
     return encodeURIComponent(value);
