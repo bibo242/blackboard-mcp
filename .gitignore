@@ -11,3 +11,7 @@ downloads/
 
 # Internal notes, not published
 docs/
+
+# Never commit registry credentials
+.npmrc
+.npmrc.*
