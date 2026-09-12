@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import { parseAutoSubmitForm } from '../dist/auth/saml.js';
 import { chromeTimeToMs, toCookieHeader, isInfrastructureHost } from '../dist/auth/browsers.js';
+import { baseDomain } from '../dist/auth/login.js';
 import { displayName } from '../dist/client/index.js';
 
 describe('SSO handoff form parsing', () => {
@@ -147,5 +148,23 @@ describe('display name resolution', () => {
     assert.equal(displayName({ id: '_1_1', givenName: 'Ada' }), 'Ada');
     assert.equal(displayName({ id: '_1_1', userName: 'ada@x.edu' }), 'ada@x.edu');
     assert.equal(displayName({ id: '_1_1' }), '_1_1');
+  });
+});
+
+describe('registrable domain derivation', () => {
+  test('keeps the public suffix for multi-part domains', () => {
+    assert.equal(baseDomain('blackboard.kfupm.edu.sa'), 'kfupm.edu.sa');
+    assert.equal(baseDomain('learn.myuni.edu.au'), 'myuni.edu.au');
+    assert.equal(baseDomain('blackboard.example.co.uk'), 'example.co.uk');
+  });
+
+  test('uses the last two labels for ordinary domains', () => {
+    assert.equal(baseDomain('bb.example.com'), 'example.com');
+    assert.equal(baseDomain('blackboard.myuniversity.edu'), 'myuniversity.edu');
+  });
+
+  test('leaves short hostnames alone', () => {
+    assert.equal(baseDomain('example.edu'), 'example.edu');
+    assert.equal(baseDomain('localhost'), 'localhost');
   });
 });
