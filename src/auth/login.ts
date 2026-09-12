@@ -85,6 +85,23 @@ export async function openBrowser(url: string): Promise<boolean> {
   });
 }
 
+/**
+ * Best-effort registrable domain, e.g. `blackboard.kfupm.edu.sa` -> `kfupm.edu.sa`.
+ *
+ * Institutions commonly run their own SSO on a sibling subdomain (KFUPM's
+ * `sts.kfupm.edu.sa` and `login.kfupm.edu.sa`, say). Those hosts are not in the
+ * hardcoded provider list, so their cookies would be missed and silent renewal
+ * could never work. Importing the whole registrable domain fixes that; the jar
+ * is pruned back to the hosts actually used once renewal succeeds.
+ */
+export function baseDomain(host: string): string {
+  const labels = host.split('.').filter(Boolean);
+  if (labels.length <= 2) return host;
+  const secondLevel = new Set(['co', 'com', 'org', 'net', 'gov', 'edu', 'ac', 'mil']);
+  const take = secondLevel.has(labels[labels.length - 2] ?? '') ? 3 : 2;
+  return labels.slice(-take).join('.');
+}
+
 function ask(question: string): Promise<string> {
   const rl = createInterface({ input: process.stdin, output: process.stderr });
   return new Promise((resolve) => {
@@ -184,6 +201,7 @@ export async function loginFromBrowser(
     try {
       const cookies = await readBrowserCookies(candidate.profile, [
         candidate.host,
+        baseDomain(candidate.host),
         ...IDP_COOKIE_HOSTS,
       ]);
       session = await Session.fromBrowserCookies(baseUrl, cookies, {});

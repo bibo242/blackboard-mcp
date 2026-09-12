@@ -287,6 +287,17 @@ async function linuxKeyringPassword(service: string): Promise<string> {
       /* try the next strategy */
     }
   }
+  // KDE desktops keep the same key in KWallet instead of exposing it through
+  // the Secret Service, so `secret-tool` finds nothing. Try KWallet directly.
+  const folder = service.replace(/ Safe Storage$/, ' Keys');
+  for (const f of [folder, 'Passwords']) {
+    try {
+      const { stdout } = await run('kwallet-query', ['-r', service, '-f', f, 'kdewallet']);
+      if (stdout.trim()) return stdout.trim();
+    } catch {
+      /* try the next folder */
+    }
+  }
   // Chromium falls back to this literal when no keyring is available; it is
   // not a secret, it is the documented default.
   log.debug('No Linux keyring entry found; using the Chromium default password');
