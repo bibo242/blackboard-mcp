@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Launch the Blackboard MCP server over stdio.
 #
 # Bakes in the state directory and an absolute node path, so launchers that do
